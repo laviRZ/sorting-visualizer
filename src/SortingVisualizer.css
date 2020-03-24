@@ -1,0 +1,35 @@
+button {
+	height: 5vh;
+	margin: 10px 10px;
+}
+
+.menu {
+	height: 12vh;
+	display: flex;
+	justify-content: center;
+}
+
+.array-container {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	display: flex;
+	align-items: flex-end;
+	margin: 0 5vh;
+}
+
+.array-bar {
+	background: turquoise;
+	margin: 0px 0.1vh;
+	display: inline-block;
+	width: 100vh;
+}
+
+.compared-bar {
+	background: orange;
+}
+
+.completed-bar {
+	background: green;
+}
