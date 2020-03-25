@@ -128,7 +128,7 @@ const SortingVisualizer = () => {
 				</div>
 
 				<div className="delay-slider-container">
-					<h2 className="label">Delay: {getDelay}</h2>
+					<h2 className="label">Time: {getDelay}</h2>
 					<input
 						type="range"
 						min="0"
