@@ -4,9 +4,20 @@ button {
 }
 
 .menu {
-	height: 12vh;
 	display: flex;
 	justify-content: center;
+}
+
+.label {
+	margin: 0 1vh;
+}
+
+.size-slider-container,
+.delay-slider-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .array-container {
@@ -16,7 +27,7 @@ button {
 	left: 0px;
 	display: flex;
 	align-items: flex-end;
-	margin: 0 5vh;
+	margin: 0 3vh;
 }
 
 .array-bar {

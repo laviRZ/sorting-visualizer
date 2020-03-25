@@ -12,6 +12,7 @@ const SortingVisualizer = () => {
 	const [getArray, setArray] = useState([Bar]); //array to hold the bars
 	const [getSlider, setSlider] = useState(50);
 	const [getDelay, setDelay] = useState(2);
+	const [getTime, setTime] = useState(0);
 	//reset the array at the start
 	useEffect(() => {
 		resetArray(10);
@@ -75,7 +76,7 @@ const SortingVisualizer = () => {
 				array[j].className = "array-bar compared-bar";
 				array[j + i].className = "array-bar compared-bar";
 				setArray([...array]);
-				await timer(getDelay / 2);
+				if (getDelay > 0) await timer(getDelay / 2);
 				//comparing and switching if needed
 				if (array[j].value > array[j + i].value) {
 					temp = array[j].value;
@@ -83,13 +84,12 @@ const SortingVisualizer = () => {
 					array[j + i].value = temp;
 					setArray([...array]);
 					swapped = true;
-					await timer(getDelay / 2);
+					if (getDelay > 0) await timer(getDelay / 2);
 				}
 				//updating the array and moving to the next pair
 				array[j].className = "array-bar";
 				array[j + i].className = "array-bar";
 				// Wait delay amount in ms before continuing, give browser time to render last update
-				console.log(getDelay);
 			}
 			//array[i - 1].className = "array-bar completed-bar";
 			if (i === 1 && swapped) i = 2;
@@ -112,32 +112,40 @@ const SortingVisualizer = () => {
 				<button onClick={() => bubbleSort()}>Do bubble sort</button>
 				<button onClick={() => combSort()}>Do comb sort</button>
 			</div>
+			<h2 className="label">Time: {getTime}</h2>
 			<div class="slide-container">
-				<input
-					type="range"
-					min="3"
-					max="250"
-					value={getSlider}
-					class="slider"
-					id="sizeSlider"
-					onChange={sliderUpdate}
-				/>
-				<input
-					type="range"
-					min="0"
-					max="1000"
-					value={getDelay}
-					class="slider"
-					id="delaySlider"
-					onChange={delayUpdate}
-				/>
+				<div className="size-slider-container">
+					<h2 className="label">Array size: {getSlider}</h2>
+					<input
+						type="range"
+						min="3"
+						max="250"
+						value={getSlider}
+						class="slider"
+						id="sizeSlider"
+						onChange={sliderUpdate}
+					/>
+				</div>
+
+				<div className="delay-slider-container">
+					<h2 className="label">Delay: {getDelay}</h2>
+					<input
+						type="range"
+						min="0"
+						max="1000"
+						value={getDelay}
+						class="slider"
+						id="delaySlider"
+						onChange={delayUpdate}
+					/>
+				</div>
 			</div>
 			<div className="array-container">
 				{getArray.map((bar, i) => (
 					<div
 						className={getArray[i].className}
 						key={i}
-						style={{ height: `${bar.value * 0.1}vh` }}
+						style={{ height: `${bar.value * 0.08}vh` }}
 					></div>
 				))}
 			</div>
