@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./SortingVisualizer.css";
 
 class Bar {
@@ -13,6 +13,10 @@ const SortingVisualizer = () => {
 	const [getSlider, setSlider] = useState(50);
 	const [getDelay, setDelay] = useState(2);
 	const [getTime, setTime] = useState(0);
+	const delayRef = useRef(getDelay);
+	useEffect(() => {
+		delayRef.current = getDelay;
+	}, [getDelay]);
 	//reset the array at the start
 	useEffect(() => {
 		resetArray(10);
@@ -42,17 +46,18 @@ const SortingVisualizer = () => {
 				//changing the colors of the compared bares
 				array[j].className = "array-bar compared-bar";
 				array[j + 1].className = "array-bar compared-bar";
-				if (getDelay > 0) await timer(getDelay / 2);
 				setArray([...array]);
+				if (delayRef.current > 0) await timer(delayRef.current / 2);
 				//comparing and switching if needed
 				if (array[j].value > array[j + 1].value) {
 					temp = array[j].value;
 					array[j].value = array[j + 1].value;
 					array[j + 1].value = temp;
 					setArray([...array]);
+
+					if (delayRef.current > 0) await timer(delayRef.current / 2);
 				}
 				//updating the array and moving to the next pair
-				if (getDelay > 0) await timer(getDelay / 2);
 				array[j].className = "array-bar";
 				array[j + 1].className = "array-bar";
 				// Wait delay amount in ms before continuing, give browser time to render last update
@@ -65,6 +70,7 @@ const SortingVisualizer = () => {
 
 	const combSort = async () => {
 		let temp,
+			startTime = new Date(),
 			swapped,
 			array = Object.assign([], getArray); // defining a temporary variable, and a duplicate array the the bars array
 		//looping from the array size to zero, in cycles
@@ -76,7 +82,7 @@ const SortingVisualizer = () => {
 				array[j].className = "array-bar compared-bar";
 				array[j + i].className = "array-bar compared-bar";
 				setArray([...array]);
-				if (getDelay > 0) await timer(getDelay / 2);
+				if (delayRef.current > 0) await timer(delayRef.current / 2);
 				//comparing and switching if needed
 				if (array[j].value > array[j + i].value) {
 					temp = array[j].value;
@@ -84,7 +90,7 @@ const SortingVisualizer = () => {
 					array[j + i].value = temp;
 					setArray([...array]);
 					swapped = true;
-					if (getDelay > 0) await timer(getDelay / 2);
+					if (delayRef.current > 0) await timer(delayRef.current / 2);
 				}
 				//updating the array and moving to the next pair
 				array[j].className = "array-bar";
@@ -101,9 +107,8 @@ const SortingVisualizer = () => {
 		setSlider(e.target.value);
 		resetArray(getSlider);
 	};
-	const delayUpdate = e => {
-		setDelay(e.target.value * 1);
-		console.log(getDelay);
+	const delayUpdate = value => {
+		setDelay(value);
 	};
 	return (
 		<>
@@ -113,30 +118,52 @@ const SortingVisualizer = () => {
 				<button onClick={() => combSort()}>Do comb sort</button>
 			</div>
 			<h2 className="label">Time: {getTime}</h2>
-			<div class="slide-container">
+			<div className="slide-container">
 				<div className="size-slider-container">
-					<h2 className="label">Array size: {getSlider}</h2>
+					<h2 className="label">
+						Array size:{" "}
+						<span
+							id="sizeValue"
+							contentEditable="true"
+							suppressContentEditableWarning={true}
+							onKeyPress={e => resetArray(e.target.innerHTML)}
+						>
+							{getSlider}
+						</span>
+					</h2>
 					<input
 						type="range"
 						min="3"
 						max="250"
 						value={getSlider}
-						class="slider"
+						className="slider"
 						id="sizeSlider"
 						onChange={sliderUpdate}
 					/>
 				</div>
 
 				<div className="delay-slider-container">
-					<h2 className="label">Time: {getDelay}</h2>
+					<h2 className="label">
+						Delay:{" "}
+						<span
+							suppressContentEditableWarning={true}
+							id="delayValue"
+							contentEditable="true"
+							onKeyUp={e => {
+								delayUpdate(e.target.innerHTML);
+							}}
+						>
+							{getDelay}
+						</span>
+					</h2>
 					<input
 						type="range"
 						min="0"
 						max="1000"
 						value={getDelay}
-						class="slider"
+						className="slider"
 						id="delaySlider"
-						onChange={delayUpdate}
+						onChange={e => delayUpdate(e.target.value)}
 					/>
 				</div>
 			</div>

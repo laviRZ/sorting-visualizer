@@ -21,6 +21,11 @@ button {
 	align-items: center;
 }
 
+#delayInput,
+#sizeInput {
+	width: min-content;
+}
+
 .array-container {
 	position: absolute;
 	bottom: 0px;
