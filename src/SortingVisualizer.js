@@ -31,8 +31,8 @@ const SortingVisualizer = () => {
 		setArray(array);
 	};
 	//a delay function. use like this: `await timer(time to wait)`
-	const timer = delay => {
-		return new Promise(resolve => setTimeout(resolve, delay));
+	const timer = (delay) => {
+		return new Promise((resolve) => setTimeout(resolve, delay));
 	};
 
 	//function to do buuble sort with given delay between each comparison
@@ -103,11 +103,11 @@ const SortingVisualizer = () => {
 		setArray([...array]);
 	};
 
-	const sliderUpdate = e => {
+	const sliderUpdate = (e) => {
 		setSlider(e.target.value);
 		resetArray(getSlider);
 	};
-	const delayUpdate = value => {
+	const delayUpdate = (value) => {
 		setDelay(value);
 	};
 	return (
@@ -126,7 +126,7 @@ const SortingVisualizer = () => {
 							id="sizeValue"
 							contentEditable="true"
 							suppressContentEditableWarning={true}
-							onKeyPress={e => resetArray(e.target.innerHTML)}
+							onKeyPress={(e) => resetArray(e.target.innerHTML)}
 						>
 							{getSlider}
 						</span>
@@ -149,7 +149,7 @@ const SortingVisualizer = () => {
 							suppressContentEditableWarning={true}
 							id="delayValue"
 							contentEditable="true"
-							onKeyUp={e => {
+							onKeyUp={(e) => {
 								delayUpdate(e.target.innerHTML);
 							}}
 						>
@@ -163,7 +163,7 @@ const SortingVisualizer = () => {
 						value={getDelay}
 						className="slider"
 						id="delaySlider"
-						onChange={e => delayUpdate(e.target.value)}
+						onChange={(e) => delayUpdate(e.target.value)}
 					/>
 				</div>
 			</div>

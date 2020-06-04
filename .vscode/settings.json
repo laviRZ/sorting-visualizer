@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/af282584-981a-4bc0-8c69-753590d6b2d9/resourceGroups/Group/providers/Microsoft.Web/sites/sorting-visualizer",
+  "appService.deploySubpath": ""
+}
